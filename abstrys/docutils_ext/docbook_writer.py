@@ -24,7 +24,7 @@ def _print_error(text, node = None):
     """Prints an error string and optionally, the node being worked on."""
     sys.stderr.write('\n%s: %s\n' % (__name__, text))
     if node:
-        sys.stderr.write(u"  %s\n" % unicode(node))
+        sys.stderr.write(u"  %s\n" % str(node))
 
 
 class DocBookWriter(writers.Writer):
@@ -101,7 +101,7 @@ class DocBookTranslator(nodes.NodeVisitor):
         """Add a title to the current element."""
         self._push_element('title', title_attribs)
         self.tb.data(title_name)
-        return self.tb_end('title')
+        return self.tb.end('title')
 
 
     def _push_element(self, name, attribs = {}):
@@ -137,7 +137,7 @@ class DocBookTranslator(nodes.NodeVisitor):
     #
 
     def visit_Text(self, node):
-        self.tb.data(unicode(node))
+        self.tb.data(str(node))
 
 
     def depart_Text(self, node):
@@ -159,6 +159,11 @@ class DocBookTranslator(nodes.NodeVisitor):
     def depart_compact_paragraph(self, node):
         self.depart_paragraph(node)
 
+    def visit_transition(self,node):
+        _print_error('system message', node)
+
+    def depart_transition(self,node):
+        pass
 
     def visit_section(self, node):
         attribs = {}
@@ -178,7 +183,7 @@ class DocBookTranslator(nodes.NodeVisitor):
             self.next_element_id = None
         else:
             if len(node['ids']) > 0:
-                attribs['{http://www.w3.org/XML/1998/namespace}id'] = unicode(node['ids'][0])
+                attribs['{http://www.w3.org/XML/1998/namespace}id'] = str(node['ids'][0])
 
         self._push_element('section', attribs)
         # TODO - Collect other attributes.
@@ -264,7 +269,7 @@ class DocBookTranslator(nodes.NodeVisitor):
         # substitution references don't seem to be caught by the processor.
         # Otherwise, I'd have this code here:
         # sub_name = node['names'][0]
-        # sub_text = unicode(node.children[0])
+        # sub_text = str(node.children[0])
         # if sub_text[0:2] == '\\u':
         #     sub_text = '&#%s;' % sub_text[2:]
         # self.subs.append('<!ENTITY %s "%s">' % (sub_name, sub_text))
@@ -274,7 +279,7 @@ class DocBookTranslator(nodes.NodeVisitor):
         pass
 
     def visit_substitution_reference(self, node):
-        #self.tb.data('&%s;' % unicode(node))
+        #self.tb.data('&%s;' % str(node))
         raise nodes.SkipNode
 
     def depart_substitution_reference(self, node):
@@ -293,11 +298,11 @@ class DocBookTranslator(nodes.NodeVisitor):
         attribs = {}
         # first check to see if an {http://www.w3.org/XML/1998/namespace}id was supplied.
         if len(node['ids']) > 0:
-            attribs['{http://www.w3.org/XML/1998/namespace}id'] = unicode(node['ids'][0])
+            attribs['{http://www.w3.org/XML/1998/namespace}id'] = str(node['ids'][0])
         elif len(node.parent['ids']) > 0:
             # If the parent node has an ID, we can use that and add '.title' at
             # the end to make a deterministic title ID.
-            attribs['{http://www.w3.org/XML/1998/namespace}id'] = '%s.title' % unicode(node.parent['ids'][0])
+            attribs['{http://www.w3.org/XML/1998/namespace}id'] = '%s.title' % str(node.parent['ids'][0])
         self._push_element('title', attribs)
 
 
@@ -501,7 +506,7 @@ class DocBookTranslator(nodes.NodeVisitor):
             imagedata_attribs['fileref'] = node['uri']
         else:
             # unknown attribute
-            imagedata_attribs['eek'] = unicode(node)
+            imagedata_attribs['eek'] = str(node)
 
         if node.hasattr('height'):
             pass # not in docbook
@@ -510,7 +515,7 @@ class DocBookTranslator(nodes.NodeVisitor):
             pass # not in docbook
 
         if node.hasattr('scale'):
-            imagedata_attribs['scale'] = unicode(node['scale'])
+            imagedata_attribs['scale'] = str(node['scale'])
 
         if node.hasattr('align'):
             alignval = node['align']
@@ -582,7 +587,7 @@ class DocBookTranslator(nodes.NodeVisitor):
         attribs = {}
 
         if node.hasattr('cols'):
-            attribs['cols'] =  unicode(node['cols'])
+            attribs['cols'] =  str(node['cols'])
 
         self._push_element('tgroup', attribs)
 
@@ -595,7 +600,7 @@ class DocBookTranslator(nodes.NodeVisitor):
         attribs = {}
 
         if node.hasattr('colwidth'):
-            attribs['colwidth'] = unicode(node['colwidth'])
+            attribs['colwidth'] = str(node['colwidth'])
 
         self._push_element('colspec', attribs)
 
