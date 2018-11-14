@@ -84,7 +84,7 @@ class DocBookBuilder(TextBuilder):
             docbook_contents = self.process_with_template(docbook_contents)
 
         output_file = open(os.path.join(self.outdir, '%s.xml' % docname), 'w+')
-        output_file.write(docbook_contents)
+        output_file.write(str(docbook_contents, encoding='utf-8'))
 
 
 def setup(app):
