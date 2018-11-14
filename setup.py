@@ -33,7 +33,7 @@ Settings:
 setup(name='rst2db',
       description="""
         A reStructuredText to MarkDown converter using Python's docutils.""",
-      version='1.1',
+      version='1.1.a1',
       install_requires=['docutils>=0.12', 'lxml>=2.3'],
       packages=find_packages(),
       entry_points={
@@ -42,7 +42,7 @@ setup(name='rst2db',
               'rst2md = abstrys.cmd_rst2md:run',
               ],
           },
-      author='Eron Hennessey',
-      author_email='eron@abstrys.com',
-      url='https://github.com/Abstrys/rst2db',
+      author='Eron Hennessey', 'Armin Stross-Radschinski ',
+      author_email='eron@abstrys.com', 'github.acsr@dev.acsr.de'
+      url='https://github.com/Abstrys/rst2db', 'https://github.com/acsr/rst2db',
       )
