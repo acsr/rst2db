@@ -42,7 +42,7 @@ setup(name='rst2db',
               'rst2md = abstrys.cmd_rst2md:run',
               ],
           },
-      author=['Eron Hennessey', 'Armin Stross-Radschinski ',]
-      author_email='github.acsr@dev.acsr.de',
-      url='https://github.com/acsr/rst2db', 
+      author=['Eron Hennessey', 'Armin Stross-Radschinski ',],
+      author_email=['eron@abstrys.com', 'github.acsr@dev.acsr.de',]
+      url=['https://github.com/acsr/rst2db', 'https://github.com/Abstrys/rst2db',]
       )
