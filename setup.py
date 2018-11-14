@@ -43,6 +43,6 @@ setup(name='rst2db',
               ],
           },
       author=['Eron Hennessey', 'Armin Stross-Radschinski ',]
-      author_email='github.acsr@dev.acsr.de'
-      url='https://github.com/acsr/rst2db' 
+      author_email='github.acsr@dev.acsr.de',
+      url='https://github.com/acsr/rst2db', 
       )
